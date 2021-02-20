@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ith.myblog.mapper.TypeDao">
+
+    <resultMap id="TypeMap" type="com.ith.myblog.domain.Type">
+        <id property="id" column="id" ></id>
+        <result property = "name" column = "name" ></result>
+        <collection property="blogs" column="id" javaType="ArrayList" ofType="Blog" select="getAllBlogByTypeId">
+            <id property="id" column="id" ></id>
+            <result property = "title" column = "title"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getAllBlogByTypeId" resultType="com.ith.myblog.domain.Blog">
+        select id,title from t_blog where type_id = #{id}
+    </select>
+    
+    <select id="ListTypeLimit" resultMap="TypeMap">
+        select * from t_type limit #{limit}
+    </select>
+
+</mapper>
